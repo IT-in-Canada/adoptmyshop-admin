@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.pageSettings {
+  background-color: rgb(186, 226, 211);
+  /* background-color: rgb(178, 74, 192); */
+}

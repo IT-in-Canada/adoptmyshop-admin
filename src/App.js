@@ -5,6 +5,11 @@ import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import history from "./utils/history";
 
+import Validate from "./components/ValidationPage.js";
+import Publish  from "./components/PublishPage.js";
+import About    from "./components/About.js";
+import NoPage   from "./components/ErrorPage.js";
+
 function App() {
   const { isAuthenticated, user, loginWithRedirect, logout, loading } = useAuth0();
 
@@ -30,6 +35,13 @@ function App() {
           <Route path="/" exact />
           <Route path='/logout' render={() => logout()} />
           <Route path="/profile" component={Profile} />
+
+          <Route path="/validate" component={Validate} />
+          <Route path="/publish" component={Publish} />
+          <Route path="/about" component={About} />
+
+
+          <Route component = { NoPage } />
         </Switch>
       </Router>
     </div>
