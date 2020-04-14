@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Row    from "react-bootstrap/Row";
 import Col    from "react-bootstrap/Col";
 
+import GetShops from "./aux/GetShops.js";
+
 // import axios from "axios";
 
 /** data structure: [{
@@ -29,14 +31,15 @@ import Col    from "react-bootstrap/Col";
   }
 }]*/
 
-export default function Validate() {
+export default function Validate(props) {
+  const { user } = props;
 
   const nameRef         = useRef(null);
   const addressRef      = useRef(null);
   const cityRef         = useRef(null);
   const phoneRef        = useRef(null);
-  const countryRef      = useRef(null);
-  const descriptionRef  = useRef(null);
+  // const countryRef      = useRef(null);
+  // const descriptionRef  = useRef(null);
 
   // setting the variables to handle shop's data
   const [
@@ -48,14 +51,28 @@ export default function Validate() {
       phone,
       description
     }, setState] = useState({
-      name: "", address: "@ddress", city: "CITY", country: "countrYY", phone: "PHONe"});
+      name: "", address: "", city: "", country: "", phone: ""});
+      
+    // function to handle the changes on the form.controlls
+    const handleChange = ({target: {name, value}}) => {
+      setState(prevState => ({ ...prevState, [name]: value }));
+      console.log("xxx=> ", [name], value);
+    };
 
+    const [hasShop, sethasShop] = useState(false);
 
-  // function to handle the changes on the form.controlls
-  const handleChange = ({target: {name, value}}) => {
-    setState(prevState => ({ ...prevState, [name]: value }));
-    console.log("xxx=> ", [name], value);
-  };
+  // const [name, setname] = useState("");
+  // const [address, setaddress] = useState("");
+  // const [city, setcity] = useState("");
+  // const [phone, setphone] = useState("");
+
+  // const handleChange = event => {
+  //   console.log("event", event.target.name)
+  //   `set${event.target.name}`(event.target.value);
+  //   // console.log("event", event.target.name, " = ", [event.target.name]);
+
+  // };
+
 
 
   // function to clean the form and the message
@@ -95,6 +112,24 @@ console.log("event==>", event);
   };
 
 
+  const getShopInfo = shop => {
+    // console.log("getting shop info:", shop);
+    
+    const x = Object.entries(shop);
+    x.forEach(item => console.log("item,", item[0]))
+    x.forEach(item => setState(prevState =>
+      ({ ...prevState, [item[0]]: [item[1]] })
+    ));
+    sethasShop(true);
+  };
+
+
+  const handleError = message => {
+    setsubmitMessage(message);
+    clearForm();
+  };
+
+
   // it can be set as either successMessage or failMessage (this is a CSS classname)
   const [classNameMessage, setclassNameMessage] = useState("");
 
@@ -109,141 +144,157 @@ console.log("event==>", event);
           <h2>New Shop to be Validated</h2>
         </Card.Header>
         <br />
-        <Form
-          autoComplete  = {"off"}
-          className     = "formPosition"
-          style         = {{width: "50rem"}}
-          onSubmit      = { handleSubmit}
-        >
 
-          <Form.Group as={Row} controlId="formName">
+        <div className="gridShopBtContainer">
+          <GetShops
+            shop        = { props.shop}
+            user        = { user}
+            getShopInfo = { getShopInfo}
+            errorMsg    = { (message) => handleError(message)}
+          />
+        </div>
+
+        { hasShop &&
+          <Form
+            autoComplete  = {"off"}
+            className     = "formPosition"
+            style         = {{width: "50rem"}}
+            onSubmit      = { handleSubmit}
+          >
+
+            <Form.Group as={Row} controlId="formName">
+              <br />
+              <Form.Label column sm="2" className="cardLabel">Shop's Name</Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  autoFocus   = {true}
+                  type        = "text"
+                  placeholder = "Shop's name"
+                  name        = "name"
+                  onChange    = { handleChange}
+                  // onChange    = { e => setname(e.target.value)}
+                  value       = { name}
+                  ref         = { nameRef}
+                />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAddress">
+              <br />
+              <Form.Label column sm="2" className="cardLabel">Address</Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  type        = "text"
+                  placeholder = "Shop's Address"
+                  name        = "address"
+                  onChange    = { handleChange}
+                  // onChange    = { e => setaddress(e.target.value)}
+                  value       = { address}
+                  ref         = { addressRef}
+                />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formCity">
+              <br />
+              <Form.Label column sm="2" className="cardLabel">City</Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  type        = "text"
+                  placeholder = "Shop's City"
+                  name        = "city"
+                  onChange    = { handleChange}
+                  // onChange    = { e => setcity(e.target.value)}
+                  value       = { city}
+                  ref         = { cityRef}
+                />
+              </Col>
+            </Form.Group>
+
+            {/* <Form.Group as={Row} controlId="formCountry">
+              <br />
+              <Form.Label column sm="2" className="cardLabel">Country</Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  type        = "text"
+                  placeholder = "Country"
+                  name        = "country"
+                  onChange    = { handleChange}
+                  value       = { country}
+                  ref         = { countryRef}
+                />
+              </Col>
+            </Form.Group> */}
+
+            <Form.Group as={Row} controlId="formPhone">
+              <br />
+              <Form.Label column sm="2" className="cardLabel">Phone</Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  type        = "text"
+                  placeholder = "Phone"
+                  name        = "phone"
+                  // onChange    = { handleChange}
+                  // onChange    = { e => setphone(e.target.value)}
+                  // value       = { phone}
+                  ref         = { phoneRef}
+                />
+              </Col>
+            </Form.Group>
+
+            {/* <Form.Group as={Row} controlId="formDescription">
+              <br />
+              <Form.Label column sm="2" className="cardLabel">Description</Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  as          = "textarea"
+                  rows        = "3"
+                  placeholder = "something to be considered and recorded about this company...."
+                  name        = "description"
+                  onChange    = { handleChange}
+                  value       = { description}
+                  ref         = { descriptionRef}
+                />
+              </Col>
+            </Form.Group> */}
+
+            <Form.Group as={Row} controlId="formMore">
+              <br />
+              <Form.Label column sm="3" className="cardLabel">...more fields</Form.Label>
+              {/* <Col sm="10">
+                <Form.Control
+                  as          = "textarea"
+                  rows        = "3"
+                  placeholder = "something to be considered and recorded about this company...."
+                  name        = "description"
+                  onChange    = { handleChange}
+                  value       = { description}
+                  ref         = { descriptionRef}
+                  // onKeyPress  = {this.handleChange}
+                />
+              </Col> */}
+            </Form.Group>
+
             <br />
-            <Form.Label column sm="2" className="cardLabel">Shop's Name</Form.Label>
-            <Col sm="10">
-              <Form.Control
-                autoFocus   = {true}
-                type        = "text"
-                placeholder = "Shop's name"
-                name        = "name"
-                onChange    = { handleChange}
-                value       = { name}
-                ref         = { nameRef}
-              />
-            </Col>
-          </Form.Group>
+            <Card.Footer className= { classNameMessage}>          
+                { submitMessage
+                  ? submitMessage
+                  : <br /> }
+              </Card.Footer>
 
-          <Form.Group as={Row} controlId="formAddress">
             <br />
-            <Form.Label column sm="2" className="cardLabel">Address</Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type        = "text"
-                placeholder = "Shop's Address"
-                name        = "address"
-                onChange    = { handleChange}
-                value       = { address}
-                ref         = { addressRef}
-              />
-            </Col>
-          </Form.Group>
+            <div className="d-flex flex-column">
+              <Button
+                // disabled  = { disabledBtn}
+                variant   = "primary" 
+                type      = "submit" 
+              >
+                Proceed Shop's Validation
+              </Button>
+            </div>
 
-          <Form.Group as={Row} controlId="formCity">
-            <br />
-            <Form.Label column sm="2" className="cardLabel">City</Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type        = "text"
-                placeholder = "Shop's City"
-                name        = "city"
-                onChange    = { handleChange}
-                value       = { city}
-                ref         = { cityRef}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="formCountry">
-            <br />
-            <Form.Label column sm="2" className="cardLabel">Country</Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type        = "text"
-                placeholder = "Country"
-                name        = "country"
-                onChange    = { handleChange}
-                value       = { country}
-                ref         = { countryRef}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="formPhone">
-            <br />
-            <Form.Label column sm="2" className="cardLabel">Phone</Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type        = "text"
-                placeholder = "Phone"
-                name        = "phone"
-                onChange    = { handleChange}
-                value       = { phone}
-                ref         = { phoneRef}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="formDescription">
-            <br />
-            <Form.Label column sm="2" className="cardLabel">Description</Form.Label>
-            <Col sm="10">
-              <Form.Control
-                as          = "textarea"
-                rows        = "3"
-                placeholder = "something to be considered and recorded about this company...."
-                name        = "description"
-                onChange    = { handleChange}
-                value       = { description}
-                ref         = { descriptionRef}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="formDescription">
-            <br />
-            <Form.Label column sm="3" className="cardLabel">...more fields</Form.Label>
-            {/* <Col sm="10">
-              <Form.Control
-                as          = "textarea"
-                rows        = "3"
-                placeholder = "something to be considered and recorded about this company...."
-                name        = "description"
-                onChange    = { handleChange}
-                value       = { description}
-                ref         = { descriptionRef}
-                // onKeyPress  = {this.handleChange}
-              />
-            </Col> */}
-          </Form.Group>
-
-          <br />
-          <Card.Footer className= { classNameMessage}>          
-              { submitMessage
-                ? submitMessage
-                : <br /> }
-            </Card.Footer>
-
-          <br />
-          <div className="d-flex flex-column">
-            <Button
-              // disabled  = { disabledBtn}
-              variant   = "primary" 
-              type      = "submit" 
-            >
-              Proceed Shop's Validation
-            </Button>
-          </div>
-
-        </Form>
+          </Form>
+        }
       </Card>
 
     </div>

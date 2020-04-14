@@ -25,7 +25,7 @@ const backgroundText = {
 }
 
 
-export default function Error() {
+export default function LandPage() {
 
   return (
     <div>

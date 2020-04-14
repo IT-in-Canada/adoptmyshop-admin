@@ -9,7 +9,6 @@ import "./App.css";
 import Validate from "./components/ValidationPage.js";
 import Publish  from "./components/PublishPage.js";
 import About    from "./components/About.js";
-// import NoPage   from "./components/ErrorPage.js";
 import LandPage from "./components/LandPage.js";
 
 function App() {
@@ -34,16 +33,13 @@ function App() {
           <NavBar user={user} />
         </header>
         <Switch>
-          {/* <Route path="/" exact /> */}
           <Route path='/logout' render={() => logout()} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile" component={ Profile } />
 
-          <Route path="/validate" component={Validate} />
-          <Route path="/publish" component={Publish} />
-          <Route path="/about" component={About} />
+          <Route path="/validate" render = {(props) => <Validate {...props} user = { user } /> } />
+          <Route path="/publish"  render = {(props) => <Publish  {...props} user = { user } /> } />
+          <Route path="/about"    user={user} component={ About } />
 
-
-          {/* <Route component = { NoPage } /> */}
           <Route component = { LandPage } />
         </Switch>
       </Router>

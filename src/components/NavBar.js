@@ -5,9 +5,8 @@ import Nav          from "react-bootstrap/Nav";
 // import NavDropdown  from "react-bootstrap/NavDropdown";
 import Button       from "react-bootstrap/Button";
 
-const NavBar = (props) => {
+export default function NavBar(props) {
   const {user} = props;
-  console.log("user", user)
 
   const [logout, setLogout] = useState(false);
 
@@ -53,4 +52,3 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;

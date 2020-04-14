@@ -37,9 +37,11 @@ export const Auth0Provider = ({
 
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
-        let token = await auth0FromHook.getTokenSilently();
-        console.log("user: ", user);
-        console.log("token: ", token);
+        const token = await auth0FromHook.getTokenSilently();
+        // console.log("user: ", user);
+        // console.log("token: ", token);
+        user["token"] = token;
+        // console.log("user: ", user);
         setUser(user);
       }
 
