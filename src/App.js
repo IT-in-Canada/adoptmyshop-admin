@@ -5,10 +5,12 @@ import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import history from "./utils/history";
 
+import "./App.css";
 import Validate from "./components/ValidationPage.js";
 import Publish  from "./components/PublishPage.js";
 import About    from "./components/About.js";
-import NoPage   from "./components/ErrorPage.js";
+// import NoPage   from "./components/ErrorPage.js";
+import LandPage from "./components/LandPage.js";
 
 function App() {
   const { isAuthenticated, user, loginWithRedirect, logout, loading } = useAuth0();
@@ -32,7 +34,7 @@ function App() {
           <NavBar user={user} />
         </header>
         <Switch>
-          <Route path="/" exact />
+          {/* <Route path="/" exact /> */}
           <Route path='/logout' render={() => logout()} />
           <Route path="/profile" component={Profile} />
 
@@ -41,7 +43,8 @@ function App() {
           <Route path="/about" component={About} />
 
 
-          <Route component = { NoPage } />
+          {/* <Route component = { NoPage } /> */}
+          <Route component = { LandPage } />
         </Switch>
       </Router>
     </div>

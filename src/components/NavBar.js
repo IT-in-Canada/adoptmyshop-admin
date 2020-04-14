@@ -24,24 +24,26 @@ const NavBar = (props) => {
           :
             <Navbar
               bg      = "info"
-              // className="showNormalMenu"
               expand  = "lg"
               sticky  = {"top"}
             >
-              <Navbar.Brand href="#home">Adoptmyshop - Admin</Navbar.Brand>
+              <Link to="/" className="navbar-brand">Adoptmyshop - Admin</Link>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                  <Nav.Link href="/user">{user.email}</Nav.Link>
-                  <Nav.Link href="/validate">Validate a Nominee</Nav.Link>
+                <Nav 
+                  className="mr-auto"
+                  fill variant="tab"
+                >
+                  <Link to="/profile" className="nav-link">{user.email}</Link>
+                  <Link to="/validate" className="nav-link">Validate a Nominee</Link>
                   {/* <NavDropdown title="Company" id="basic-nav-dropdown">
                     <NavDropdown.Item href="/validate">Validate a Nominee</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/checkPublished">Check Published Companies</NavDropdown.Item>
                     <NavDropdown.Item href="/checkHistory">Check History</NavDropdown.Item>
                   </NavDropdown> */}
-                  <Nav.Link href="/publish">Publish a new company</Nav.Link>
-                  <Nav.Link href="/about">About</Nav.Link>
+                  <Link to="/publish" className="nav-link">Publish a new company</Link>
+                  <Link to="/about" className="nav-link">About</Link>
                 </Nav>
                 <Button onClick = { logoutFunc }>Logout</Button>
               </Navbar.Collapse>
@@ -52,14 +54,3 @@ const NavBar = (props) => {
 };
 
 export default NavBar;
-
-    {/**
-      <div>           
-      <span>
-      <Link to="/">Home</Link>&nbsp;
-      <Link to="/profile">Profile</Link>
-      <Link to="/logout">Log out</Link>
-      </span>
-      <h1>Hello, {user.name}</h1>
-      </div>
-    */}
