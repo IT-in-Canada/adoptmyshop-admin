@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Publish(props) {
-  const { user } = props;
+  // const { user } = props;
 
   return (
     <div className="formPosition">

@@ -9,7 +9,11 @@ import GetShops from "./aux/GetShops.js";
 
 // import axios from "axios";
 
-/** data structure: [{
+
+export default function Validate(props) {
+  const { user } = props;
+
+  /** cons dataStructure = [{
   "shop": {
       "name": "3 Quarters Full Cafe",
       "address": "1789 Comox Street",
@@ -30,16 +34,27 @@ import GetShops from "./aux/GetShops.js";
       }]
   }
 }]*/
+  // ];
 
-export default function Validate(props) {
-  const { user } = props;
+  const dataStructure = [
+    "name",
+    "address",
+    "city",
+    "country",
+    "phone",
+    "description",
+    "tags",
+    "active",
+    "featured_image",
+    "images",
+  ];
 
   const nameRef         = useRef(null);
   const addressRef      = useRef(null);
   const cityRef         = useRef(null);
   const phoneRef        = useRef(null);
-  // const countryRef      = useRef(null);
-  // const descriptionRef  = useRef(null);
+  const countryRef      = useRef(null);
+  const descriptionRef  = useRef(null);
 
   // setting the variables to handle shop's data
   const [
@@ -51,38 +66,25 @@ export default function Validate(props) {
       phone,
       description
     }, setState] = useState({
-      name: "", address: "", city: "", country: "", phone: ""});
+      name: "", address: "", city: "", country: "", phone: "", description: ""});
       
     // function to handle the changes on the form.controlls
     const handleChange = ({target: {name, value}}) => {
       setState(prevState => ({ ...prevState, [name]: value }));
-      console.log("xxx=> ", [name], value);
     };
 
     const [hasShop, sethasShop] = useState(false);
 
-  // const [name, setname] = useState("");
-  // const [address, setaddress] = useState("");
-  // const [city, setcity] = useState("");
-  // const [phone, setphone] = useState("");
-
-  // const handleChange = event => {
-  //   console.log("event", event.target.name)
-  //   `set${event.target.name}`(event.target.value);
-  //   // console.log("event", event.target.name, " = ", [event.target.name]);
-
-  // };
-
-
 
   // function to clean the form and the message
-  const clearForm = event => {
+  const clearForm = () => {
     setTimeout(() => {
 
-      //how to clean all form's fields?
-      // setState(prevState => ({ ...prevState, [name]: "value" }));
-      // objBase.forEach(obj => setState)
-console.log("event==>", event);
+      // it cleans up all values for the data structure
+      const cleanValues = Object.values(dataStructure);
+      cleanValues.forEach(item => setState(prevState =>
+        ({ ...prevState, [item]: "" })
+      ));
       
 
       setsubmitMessage("");
@@ -91,42 +93,49 @@ console.log("event==>", event);
   };
 
 
+  const clearMessage = () => {
+    setTimeout(() => {
+      setsubmitMessage("");
+    }, 1500);
+  };
+
+
   // it is called by the submit button
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log("event:::", event.target);
+    nameRef.current.focus();
 
     if (!name) {    // add more validations
-      console.log("nameRef", phoneRef)
-      nameRef.current.focus();
       setsubmitMessage("Please, fill the form accordingly.");
       setclassNameMessage("failMessage");
+      clearMessage();
     } else {  // call API to register a new shop on shop's collection
 
       //if procedure is okay:
       setclassNameMessage("successMessage");
       setsubmitMessage("Nominee Shop has been validated.");
+      clearForm();
     }
-
-    clearForm(event);
   };
 
 
-  const getShopInfo = shop => {
-    // console.log("getting shop info:", shop);
-    
-    const x = Object.entries(shop);
-    x.forEach(item => console.log("item,", item[0]))
-    x.forEach(item => setState(prevState =>
+  /**
+   * method to receive data from GetShops componenet and fullfil the form with shop's data
+   * @param {*} shop 
+   */
+  const getShopInfo = shop => {    
+    // it cleans up all values for the data structure
+    const cleanValues = Object.values(dataStructure);
+    cleanValues.forEach(item => setState(prevState =>
+      ({ ...prevState, [item]: "" })
+    ));
+
+    // it loads the new values coming from GetShops.js
+    const setValues = Object.entries(shop);
+    setValues.forEach(item => setState(prevState =>
       ({ ...prevState, [item[0]]: [item[1]] })
     ));
     sethasShop(true);
-  };
-
-
-  const handleError = message => {
-    setsubmitMessage(message);
-    clearForm();
   };
 
 
@@ -150,7 +159,6 @@ console.log("event==>", event);
             shop        = { props.shop}
             user        = { user}
             getShopInfo = { getShopInfo}
-            errorMsg    = { (message) => handleError(message)}
           />
         </div>
 
@@ -169,7 +177,7 @@ console.log("event==>", event);
                 <Form.Control
                   autoFocus   = {true}
                   type        = "text"
-                  placeholder = "Shop's name"
+                  placeholder = "* Shop's name"
                   name        = "name"
                   onChange    = { handleChange}
                   // onChange    = { e => setname(e.target.value)}
@@ -185,7 +193,7 @@ console.log("event==>", event);
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "Shop's Address"
+                  placeholder = "* Shop's Address"
                   name        = "address"
                   onChange    = { handleChange}
                   // onChange    = { e => setaddress(e.target.value)}
@@ -201,30 +209,29 @@ console.log("event==>", event);
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "Shop's City"
+                  placeholder = "* Shop's City"
                   name        = "city"
                   onChange    = { handleChange}
-                  // onChange    = { e => setcity(e.target.value)}
                   value       = { city}
                   ref         = { cityRef}
                 />
               </Col>
             </Form.Group>
 
-            {/* <Form.Group as={Row} controlId="formCountry">
+            <Form.Group as={Row} controlId="formCountry">
               <br />
               <Form.Label column sm="2" className="cardLabel">Country</Form.Label>
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "Country"
+                  placeholder = "* Country"
                   name        = "country"
                   onChange    = { handleChange}
                   value       = { country}
                   ref         = { countryRef}
                 />
               </Col>
-            </Form.Group> */}
+            </Form.Group>
 
             <Form.Group as={Row} controlId="formPhone">
               <br />
@@ -232,31 +239,30 @@ console.log("event==>", event);
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "Phone"
+                  placeholder = "* Phone"
                   name        = "phone"
-                  // onChange    = { handleChange}
-                  // onChange    = { e => setphone(e.target.value)}
-                  // value       = { phone}
+                  onChange    = { handleChange}
+                  value       = { phone}
                   ref         = { phoneRef}
                 />
               </Col>
             </Form.Group>
 
-            {/* <Form.Group as={Row} controlId="formDescription">
+            <Form.Group as={Row} controlId="formDescription">
               <br />
               <Form.Label column sm="2" className="cardLabel">Description</Form.Label>
               <Col sm="10">
                 <Form.Control
                   as          = "textarea"
                   rows        = "3"
-                  placeholder = "something to be considered and recorded about this company...."
+                  placeholder = "* something to be considered and recorded about this company...."
                   name        = "description"
                   onChange    = { handleChange}
                   value       = { description}
                   ref         = { descriptionRef}
                 />
               </Col>
-            </Form.Group> */}
+            </Form.Group>
 
             <Form.Group as={Row} controlId="formMore">
               <br />

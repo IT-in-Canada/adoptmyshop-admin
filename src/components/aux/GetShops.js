@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import axios from "axios";
+// import axios from "axios";
 import { Dropdown } from "react-bootstrap";
 
 const tempShops = [
   {
     name: "first shop",
-    city: "Vanbcouver"
+    city: "Vanbcouver",
   },
   {
     name: "seconD",
     city: "VAN"
+  },
+  {
+    "name": "3 Quarters Full Cafe",
+    "address": "1789 Comox Street",
+    "city": "Vancouver",
+    "country": "CA",
+    "phone": "123123",
+    "description": "It may be called 3 Quarters Full, ...",
+    "tags": ["delivery", "pickup","taiwaneese"],
+    "active": true,
+    "featured_image": "",
+    "images": [],
+    "support_options": [{
+        "type": "gitfcard",
+        "link": "https://www.instagram.com/3quartersfullcafe/"
+    },{
+        "type": "online_order",
+        "link": "https://www.instagram.com/p/B97b-E9hBOg/"
+    }]
   }
 ];
 
 /**
- * this componenet queries for shops documents
+ * this component queries for shops documents (those that need to be validated or puslished).
  * there are 2 possible APIs:
  *  - toValidate shops, or
  *  - to PublishShops
@@ -26,7 +45,8 @@ export default function GetShops(props)  {
     const [errorMessage, seterrorMessage] = useState("");
 
 
-  useEffect(async() => {
+  // useEffect(async() => {
+    useEffect(() => {
     /**
      * it queries the API for all current shops
      * this component is going to receive a parameter that specifies what type of shop to query (Nominee to Validate or to Publish)
@@ -54,8 +74,11 @@ export default function GetShops(props)  {
           seterrorMessage(err.message);
       }
     */
+
+    if (1)
       setshops(tempShops);
-      // setshops("");
+    else
+      seterrorMessage("not possible for a random reason")
     }, []);
 
 
@@ -63,7 +86,7 @@ export default function GetShops(props)  {
     return(
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {(props.shop && props.shop.name) || `Select Shop` }
+          {(props.shop && props.shop.name) || `Select Shop to be Validated` }
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
@@ -79,10 +102,16 @@ export default function GetShops(props)  {
     );
   }
 
+
   const changes = (event, incommingShop) => {
     event.preventDefault();
     props.getShopInfo(incommingShop);
   }
+
+  
+  const returnErrorMessage = () => {
+    return(errorMessage);
+  };
 
 
   return (
@@ -90,7 +119,7 @@ export default function GetShops(props)  {
       { shops
         ? populateDropbox()
         : errorMessage
-          ? props.errorMsg(errorMessage)
+          ? returnErrorMessage()
           : "No shops to validate" }
     </div>
   )
