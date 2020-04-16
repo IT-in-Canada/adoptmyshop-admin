@@ -1,36 +1,6 @@
 import React, { useState, useEffect } from 'react'
-// import axios from "axios";
+import axios from "axios";
 import { Dropdown } from "react-bootstrap";
-
-const tempShops = [
-  {
-    name: "first shop",
-    city: "Vanbcouver",
-  },
-  {
-    name: "seconD",
-    city: "VAN"
-  },
-  {
-    "name": "3 Quarters Full Cafe",
-    "address": "1789 Comox Street",
-    "city": "Vancouver",
-    "country": "CA",
-    "phone": "123123",
-    "description": "It may be called 3 Quarters Full, ...",
-    "tags": ["delivery", "pickup","taiwaneese"],
-    "active": true,
-    "featured_image": "",
-    "images": [],
-    "support_options": [{
-        "type": "gitfcard",
-        "link": "https://www.instagram.com/3quartersfullcafe/"
-    },{
-        "type": "online_order",
-        "link": "https://www.instagram.com/p/B97b-E9hBOg/"
-    }]
-  }
-];
 
 /**
  * this component queries for shops documents (those that need to be validated or puslished).
@@ -40,21 +10,16 @@ const tempShops = [
  * @param {*} props 
  */
 export default function GetShops(props)  {
+  const [shops, setshops] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
 
-    const [shops, setshops] = useState("");
-    const [errorMessage, seterrorMessage] = useState("");
 
-
-  // useEffect(async() => {
-    useEffect(() => {
-    /**
-     * it queries the API for all current shops
-     * this component is going to receive a parameter that specifies what type of shop to query (Nominee to Validate or to Publish)
-     */
-    
-    /*
-    const url = props.type === "toValidate" ? "/API_toValidate" : "/API_toPublish";
-    
+  /**
+   * it queries the API for all current shops
+   * this component is going to receive a parameter that specifies what type of shop to query (Nominee to Validate or to Publish)
+   */
+  async function fetchData() {
+    const url = props.type === "toValidate" ? "http://localhost:3333/toValidate" : "http://localhost:3333/toPublish";    
     try {
       const getShops = await axios.get( 
         url, 
@@ -64,25 +29,25 @@ export default function GetShops(props)  {
             "Authorization" : `Bearer ${props.user.token}`
           }
         },
-        );
-        
-        if (getShops.data.count) {
-          //proceed accordingly
-        }
-      } catch(err) {
-          //proceed accordingly
-          seterrorMessage(err.message);
+      );
+
+      if (getShops.data.count) {
+        setshops(getShops.data.content);
+      } else {
+        throw getShops.data.message;
       }
-    */
-
-    if (1)
-      setshops(tempShops);
-    else
-      seterrorMessage("not possible for a random reason")
-    }, []);
+    } catch(err) {
+        seterrorMessage(err.message || err);
+    }
+  }
 
 
-    const populateDropbox = () => {
+  useEffect(() => {    
+    (fetchData());
+  });
+
+
+  const populateDropbox = () => {
     return(
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -108,7 +73,7 @@ export default function GetShops(props)  {
     props.getShopInfo(incommingShop);
   }
 
-  
+
   const returnErrorMessage = () => {
     return(errorMessage);
   };

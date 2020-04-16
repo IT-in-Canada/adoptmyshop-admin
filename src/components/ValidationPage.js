@@ -7,7 +7,7 @@ import Col    from "react-bootstrap/Col";
 
 import GetShops from "./aux/GetShops.js";
 
-// import axios from "axios";
+import axios from "axios";
 
 
 export default function Validate(props) {
@@ -68,16 +68,24 @@ export default function Validate(props) {
     }, setState] = useState({
       name: "", address: "", city: "", country: "", phone: "", description: ""});
       
-    // function to handle the changes on the form.controlls
-    const handleChange = ({target: {name, value}}) => {
-      setState(prevState => ({ ...prevState, [name]: value }));
-    };
 
-    const [hasShop, sethasShop] = useState(false);
+  // function to handle the changes on the form.controlls
+  const handleChange = ({target: {name, value}}) => {
+    setState(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  // variable to hold shop info and pass to the GetShop component
+  const [shop, setshop] = useState("")
+
+  // it can be set as either successMessage or failMessage (this is a CSS classname)
+  const [classNameMessage, setclassNameMessage] = useState("");
+
+  // a status message shown after a submit, or when trying to procedee one
+  const [submitMessage, setsubmitMessage] = useState("");
 
 
   // function to clean the form and the message
-  const clearForm = () => {
+  const clearForm = (cleanScreen) => {
     setTimeout(() => {
 
       // it cleans up all values for the data structure
@@ -86,7 +94,7 @@ export default function Validate(props) {
         ({ ...prevState, [item]: "" })
       ));
       
-
+      cleanScreen && setshop("");
       setsubmitMessage("");
       window.scrollTo(0,0); // it goes to the top of the screen
     }, 1500);
@@ -101,7 +109,7 @@ export default function Validate(props) {
 
 
   // it is called by the submit button
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     nameRef.current.focus();
 
@@ -111,10 +119,37 @@ export default function Validate(props) {
       clearMessage();
     } else {  // call API to register a new shop on shop's collection
 
-      //if procedure is okay:
-      setclassNameMessage("successMessage");
-      setsubmitMessage("Nominee Shop has been validated.");
-      clearForm();
+      // this is a temp API for test purpose
+      const url = "http://localhost:3333/toValidate";
+
+      try {
+        const postShops = await axios.post(
+          url, 
+          {  
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization" : `Bearer ${props.user.token}`
+            }
+          },
+        );
+
+        if (postShops.data.count) {
+          //if procedure is okay:
+          setclassNameMessage("successMessage");
+          setsubmitMessage("Nominee Shop has been validated.");
+          // setshop("");
+          clearForm(true);
+          // window.location.reload(true);
+          clearForm(true);
+        } else {
+          throw(postShops.data.err);
+        }
+      } catch(err) {
+          setclassNameMessage("failMessage");
+          setsubmitMessage(err.message);
+          clearMessage();
+      }
+
     }
   };
 
@@ -130,20 +165,15 @@ export default function Validate(props) {
       ({ ...prevState, [item]: "" })
     ));
 
-    // it loads the new values coming from GetShops.js
+    // it loads the new values coming from GetShops component
     const setValues = Object.entries(shop);
     setValues.forEach(item => setState(prevState =>
       ({ ...prevState, [item[0]]: [item[1]] })
     ));
-    sethasShop(true);
+
+    setshop(shop);
   };
 
-
-  // it can be set as either successMessage or failMessage (this is a CSS classname)
-  const [classNameMessage, setclassNameMessage] = useState("");
-
-  // a status message shown after a submit, or when trying to procedee one
-  const [submitMessage, setsubmitMessage] = useState("");
 
 
   return (
@@ -156,13 +186,14 @@ export default function Validate(props) {
 
         <div className="gridShopBtContainer">
           <GetShops
-            shop        = { props.shop}
+            shop        = { shop}
             user        = { user}
+            type        = { "toValidate"}
             getShopInfo = { getShopInfo}
           />
         </div>
-
-        { hasShop &&
+  
+        { shop &&
           <Form
             autoComplete  = {"off"}
             className     = "formPosition"
