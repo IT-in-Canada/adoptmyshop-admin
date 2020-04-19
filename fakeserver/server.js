@@ -7,9 +7,26 @@ const bodyParser  = require("body-parser");
 const validateRoutes = require("./validateR.js");
 const publishRoutes  = require("./publishR.js");
 
+// authentication purposes
+require('dotenv').config();
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+console.log("process", process.env.ISSUER)
+let jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: process.env.JWKS_URI
+  }),
+  audience: process.env.AUDIENCE,
+  issuer: process.env.ISSUER,
+  algorithms: ['RS256']
+});
+
+
 // it logs the actions on the screen
 app.use(morgan("dev"));
-
 
 
 // settings related to boy-parser, which allows extended urlencoder and enables to receive json format
@@ -34,9 +51,8 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // shop to be validate's route
-app.use("/toValidate", validateRoutes);
+app.use("/toValidate", jwtCheck, validateRoutes);
 
 // shop to be publish's route
 app.use("/toPublish", publishRoutes);

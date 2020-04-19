@@ -27,24 +27,27 @@ export default function GetShops(props)  {
           headers: { 
             "Content-Type": "application/json",
             "Authorization" : `Bearer ${props.user.token}`
+            // "Authorization" : `Bearer ${"props.user.token"}` // to test whether the authentication is working
           }
         },
       );
 
+// console.log("getShops.data", getShops.data);
       if (getShops.data.count) {
         setshops(getShops.data.content);
       } else {
-        throw getShops.data.message;
+        throw getShops.data.err;
       }
     } catch(err) {
+// console.log("err", err);
         seterrorMessage(err.message || err);
     }
   }
 
 
   useEffect(() => {    
-    (fetchData());
-  });
+    fetchData();
+  }, []);
 
 
   const populateDropbox = () => {
