@@ -1,6 +1,5 @@
 
 const getValidate = (req, res) => {
-console.log("req.userData", req.userData);
   const shopsToValidate = [
     {
       name    : "first shop",

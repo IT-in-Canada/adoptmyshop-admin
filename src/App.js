@@ -6,8 +6,8 @@ import Profile from "./components/Profile";
 import history from "./utils/history";
 
 import "./App.css";
-import Validate from "./components/ValidationPage.js";
-import Publish  from "./components/PublishPage.js";
+import Validate from "./components/Validate.js";
+import Publish  from "./components/Publish.js";
 import About    from "./components/About.js";
 import LandPage from "./components/LandPage.js";
 

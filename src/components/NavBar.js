@@ -35,12 +35,6 @@ export default function NavBar(props) {
                 >
                   <Link to="/profile" className="nav-link">{user.email}</Link>
                   <Link to="/validate" className="nav-link">Validate a Nominee</Link>
-                  {/* <NavDropdown title="Company" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/validate">Validate a Nominee</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="/checkPublished">Check Published Companies</NavDropdown.Item>
-                    <NavDropdown.Item href="/checkHistory">Check History</NavDropdown.Item>
-                  </NavDropdown> */}
                   <Link to="/publish" className="nav-link">Publish a new company</Link>
                   <Link to="/about" className="nav-link">About</Link>
                 </Nav>

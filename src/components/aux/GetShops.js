@@ -19,7 +19,9 @@ export default function GetShops(props)  {
    * this component is going to receive a parameter that specifies what type of shop to query (Nominee to Validate or to Publish)
    */
   async function fetchData() {
+    // temporary setting, local environment
     const url = props.type === "toValidate" ? "http://localhost:3333/toValidate" : "http://localhost:3333/toPublish";    
+
     try {
       const getShops = await axios.get( 
         url, 
@@ -32,14 +34,12 @@ export default function GetShops(props)  {
         },
       );
 
-// console.log("getShops.data", getShops.data);
       if (getShops.data.count) {
         setshops(getShops.data.content);
       } else {
         throw getShops.data.err;
       }
     } catch(err) {
-// console.log("err", err);
         seterrorMessage(err.message || err);
     }
   }

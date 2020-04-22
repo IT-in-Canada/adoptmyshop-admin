@@ -1,35 +1,32 @@
 
 .formPosition {
   max-width: 900px;
-  /* margin: auto; */
   margin-top: 2rem;
   margin-left: 3rem;
-  /* margin-right: 8rem; */
 }
 
 .cardSettings{
   background-color: lightblue !important;
   padding: 1rem;
   width: 100%;
-  /* margin-left: 1rem; */
 }
 
 .cardLabel {
   font-weight: bold;
 }
 
-.successMessage {
-  color: green;
+.message {
   font-weight: bolder;
   text-align: center;
   font-size: x-large;
 }
 
-.failMessage {
+.message.success {
+  color: green;
+}
+
+.message.fail {
   color: red;
-  font-weight: bolder;
-  text-align: center;
-  font-size: x-large;
 }
 
 .gridShopBtContainer {

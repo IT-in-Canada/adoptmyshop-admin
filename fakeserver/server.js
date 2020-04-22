@@ -11,7 +11,6 @@ const publishRoutes  = require("./publishR.js");
 require('dotenv').config();
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
-console.log("process", process.env.ISSUER)
 let jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
       cache: true,
@@ -52,7 +51,8 @@ app.use((req, res, next) => {
 });
 
 // shop to be validate's route
-app.use("/toValidate", jwtCheck, validateRoutes);
+// app.use("/toValidate", jwtCheck, validateRoutes);
+app.use("/toValidate", validateRoutes);
 
 // shop to be publish's route
 app.use("/toPublish", publishRoutes);

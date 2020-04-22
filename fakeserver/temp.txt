@@ -1,0 +1,19 @@
+1- .env.templat
+ done
+
+2- Page sufix - no sufix
+ done
+
+3- About.js
+ the name is not appropriate.  It's just an option.
+<p> here, we can add some information that can help the support team, such as contacts, maybe a how-to-do or the workflow.</p>
+
+4- Notfound route
+ actually it was in a old version. Right now the default route will be Land. The file was present, but by my mistake. It was not being used.
+
+5- comments
+  Done - the code was being kept to first check with the team if it would be menu dropdown or just.0
+ Some components has a bit of code commented, such as Publish.js has a line of code to be used in the future, same situation on Validate.js, line 301.
+
+6- CSS classname
+ for message (success and fail) classname, okay. I need to apply the name convention to other classnames such as formPosition, cardLabel...

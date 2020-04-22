@@ -96,7 +96,6 @@ export default function Validate(props) {
       
       cleanScreen && setshop("");
       setsubmitMessage("");
-      window.scrollTo(0,0); // it goes to the top of the screen
     }, 1500);
   };
 
@@ -115,10 +114,9 @@ export default function Validate(props) {
 
     if (!name) {    // add more validations
       setsubmitMessage("Please, fill the form accordingly.");
-      setclassNameMessage("failMessage");
+      setclassNameMessage("message-success");
       clearMessage();
     } else {  // call API to register a new shop on shop's collection
-
       // this is a temp API for test purpose
       const url = "http://localhost:3333/toValidate";
 
@@ -132,10 +130,10 @@ export default function Validate(props) {
             }
           },
         );
-
+        
         if (postShops.data.count) {
           //if procedure is okay:
-          setclassNameMessage("successMessage");
+          setclassNameMessage("message success");
           setsubmitMessage("Nominee Shop has been validated.");
           // setshop("");
           clearForm(true);
@@ -145,7 +143,7 @@ export default function Validate(props) {
           throw(postShops.data.err);
         }
       } catch(err) {
-          setclassNameMessage("failMessage");
+          setclassNameMessage("message fail");
           setsubmitMessage(err.message);
           clearMessage();
       }
