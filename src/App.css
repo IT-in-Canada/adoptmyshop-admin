@@ -1,17 +1,22 @@
 
-.formPosition {
+.general-position {
   max-width: 900px;
   margin-top: 2rem;
   margin-left: 3rem;
 }
 
-.cardSettings{
+.form-position {
+  margin-top: 2rem;
+  margin-left: 3rem;
+}
+
+.card-settings{
   background-color: lightblue !important;
   padding: 1rem;
   width: 100%;
 }
 
-.cardLabel {
+.card-label {
   font-weight: bold;
 }
 
@@ -29,7 +34,7 @@
   color: red;
 }
 
-.gridShopBtContainer {
+.button-getshop {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
   color: red;
@@ -39,7 +44,7 @@
 
 
 @media only screen and (max-width: 800px){
-  .formPosition {
+  .general-position {
     margin: auto;
   }
 }

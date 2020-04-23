@@ -42,7 +42,7 @@ const getPublish = (req, res) => {
 
 const postPublish = (req, res) => {
   // set true for success OR false to fail
-  const condition = true;
+  const condition = false;
 
   return(condition 
     ? res.json({

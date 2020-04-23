@@ -9,7 +9,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="formPosition">
+    <div className="general-position">
       <img src={user.picture} alt="Profile" />
 
       <h2>{user.name}</h2>

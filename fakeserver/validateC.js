@@ -54,7 +54,7 @@ const getValidate = (req, res) => {
 
 const postValidate = (req, res) => {
   // set true for success OR false to fail
-  const condition = true;
+  const condition = false;
 
   return(condition 
     ? res.json({
@@ -64,7 +64,7 @@ const postValidate = (req, res) => {
       })
     : res.json({
         count   : 0,
-        err     : { message : "fail"},
+        err     : { message : "fail asdasd"},
         content : "ERROR"
       })
   );

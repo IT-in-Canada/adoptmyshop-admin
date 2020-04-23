@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function About() {
+export default function Info() {
   return (
-    <div className="formPosition">
+    <div className="general-position">
       <h2> About page.</h2>
       <p>here, we can add some information that can help the support team, such as contacts, maybe a how-to-do or the workflow.</p>
       <br />

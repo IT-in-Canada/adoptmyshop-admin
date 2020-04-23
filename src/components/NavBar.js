@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Navbar       from "react-bootstrap/Navbar";
 import Nav          from "react-bootstrap/Nav";
-// import NavDropdown  from "react-bootstrap/NavDropdown";
 import Button       from "react-bootstrap/Button";
+
 
 export default function NavBar(props) {
   const {user} = props;
@@ -36,7 +36,7 @@ export default function NavBar(props) {
                   <Link to="/profile" className="nav-link">{user.email}</Link>
                   <Link to="/validate" className="nav-link">Validate a Nominee</Link>
                   <Link to="/publish" className="nav-link">Publish a new company</Link>
-                  <Link to="/about" className="nav-link">About</Link>
+                  <Link to="/info" className="nav-link">Info</Link>
                 </Nav>
                 <Button onClick = { logoutFunc }>Logout</Button>
               </Navbar.Collapse>

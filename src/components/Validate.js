@@ -175,14 +175,14 @@ export default function Validate(props) {
 
 
   return (
-    <div className="formPosition">
-      <Card className="cardSettings">
+    <div className="general-position">
+      <Card className="card-settings">
         <Card.Header>
           <h2>New Shop to be Validated</h2>
         </Card.Header>
         <br />
 
-        <div className="gridShopBtContainer">
+        <div className="button-getshop">
           <GetShops
             shop        = { shop}
             user        = { user}
@@ -194,22 +194,21 @@ export default function Validate(props) {
         { shop &&
           <Form
             autoComplete  = {"off"}
-            className     = "formPosition"
+            className     = "form-position"
             style         = {{width: "50rem"}}
             onSubmit      = { handleSubmit}
           >
 
             <Form.Group as={Row} controlId="formName">
               <br />
-              <Form.Label column sm="2" className="cardLabel">Shop's Name</Form.Label>
+              <Form.Label column sm="2" className="card-label">Shop's Name</Form.Label>
               <Col sm="10">
                 <Form.Control
                   autoFocus   = {true}
                   type        = "text"
-                  placeholder = "* Shop's name"
+                  placeholder = "*** Shop's name"
                   name        = "name"
                   onChange    = { handleChange}
-                  // onChange    = { e => setname(e.target.value)}
                   value       = { name}
                   ref         = { nameRef}
                 />
@@ -218,11 +217,11 @@ export default function Validate(props) {
 
             <Form.Group as={Row} controlId="formAddress">
               <br />
-              <Form.Label column sm="2" className="cardLabel">Address</Form.Label>
+              <Form.Label column sm="2" className="card-label">Address</Form.Label>
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "* Shop's Address"
+                  placeholder = "*** Shop's Address"
                   name        = "address"
                   onChange    = { handleChange}
                   // onChange    = { e => setaddress(e.target.value)}
@@ -234,11 +233,11 @@ export default function Validate(props) {
 
             <Form.Group as={Row} controlId="formCity">
               <br />
-              <Form.Label column sm="2" className="cardLabel">City</Form.Label>
+              <Form.Label column sm="2" className="card-label">City</Form.Label>
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "* Shop's City"
+                  placeholder = "*** Shop's City"
                   name        = "city"
                   onChange    = { handleChange}
                   value       = { city}
@@ -249,11 +248,11 @@ export default function Validate(props) {
 
             <Form.Group as={Row} controlId="formCountry">
               <br />
-              <Form.Label column sm="2" className="cardLabel">Country</Form.Label>
+              <Form.Label column sm="2" className="card-label">Country</Form.Label>
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "* Country"
+                  placeholder = "*** Country"
                   name        = "country"
                   onChange    = { handleChange}
                   value       = { country}
@@ -264,11 +263,11 @@ export default function Validate(props) {
 
             <Form.Group as={Row} controlId="formPhone">
               <br />
-              <Form.Label column sm="2" className="cardLabel">Phone</Form.Label>
+              <Form.Label column sm="2" className="card-label">Phone</Form.Label>
               <Col sm="10">
                 <Form.Control
                   type        = "text"
-                  placeholder = "* Phone"
+                  placeholder = "*** Phone"
                   name        = "phone"
                   onChange    = { handleChange}
                   value       = { phone}
@@ -279,12 +278,12 @@ export default function Validate(props) {
 
             <Form.Group as={Row} controlId="formDescription">
               <br />
-              <Form.Label column sm="2" className="cardLabel">Description</Form.Label>
+              <Form.Label column sm="2" className="card-label">Description</Form.Label>
               <Col sm="10">
                 <Form.Control
                   as          = "textarea"
                   rows        = "3"
-                  placeholder = "* something to be considered and recorded about this company...."
+                  placeholder = "*** something to be considered and recorded about this company...."
                   name        = "description"
                   onChange    = { handleChange}
                   value       = { description}
@@ -295,7 +294,7 @@ export default function Validate(props) {
 
             <Form.Group as={Row} controlId="formMore">
               <br />
-              <Form.Label column sm="3" className="cardLabel">...more fields</Form.Label>
+              <Form.Label column sm="3" className="card-label">...more fields</Form.Label>
               {/* <Col sm="10">
                 <Form.Control
                   as          = "textarea"
