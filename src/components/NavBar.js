@@ -1,18 +1,48 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import Navbar       from "react-bootstrap/Navbar";
+import Nav          from "react-bootstrap/Nav";
+import Button       from "react-bootstrap/Button";
 
-const NavBar = (props) => {
+
+export default function NavBar(props) {
   const {user} = props;
+
+  const [logout, setLogout] = useState(false);
+
+  const logoutFunc = () => {
+    const question = window.confirm("Are you sure you wanna leave?");
+    question && setLogout(true);
+  }
+
+
   return (
-    <div>           
-        <span>
-            <Link to="/">Home</Link>&nbsp;
-            <Link to="/profile">Profile</Link>
-            <Link to="/logout">Log out</Link>
-        </span>
-        <h1>Hello, {user.name}</h1>
+    <div>
+      { logout
+          ? <Redirect to = "/logout"/>
+          :
+            <Navbar
+              bg      = "info"
+              expand  = "lg"
+              sticky  = {"top"}
+            >
+              <Link to="/" className="navbar-brand">Adoptmyshop - Admin</Link>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav 
+                  className="mr-auto"
+                  fill variant="tab"
+                >
+                  <Link to="/profile" className="nav-link">{user.email}</Link>
+                  <Link to="/validate" className="nav-link">Validate a Nominee</Link>
+                  <Link to="/publish" className="nav-link">Publish a new company</Link>
+                  <Link to="/info" className="nav-link">Info</Link>
+                </Nav>
+                <Button onClick = { logoutFunc }>Logout</Button>
+              </Navbar.Collapse>
+            </Navbar>
+      }
     </div>
   );
 };
 
-export default NavBar;
